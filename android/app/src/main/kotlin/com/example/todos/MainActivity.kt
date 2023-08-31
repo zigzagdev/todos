@@ -10,5 +10,3 @@ class MainActivity: FlutterActivity() {
 
 
 
-
-
