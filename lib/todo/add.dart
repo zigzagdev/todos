@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class AddTodoComplete extends StatelessWidget {
+class ToDoAddPage extends StatefulWidget {
   @override
-  addingTodo createState() => addingTodo();
+  _ToDoAddPageState createState() => _ToDoAddPageState();
 }
 
-class addingTodo extends State<AddTodoComplete> {
-  String text = '';
+class _ToDoAddPageState extends State<ToDoAddPage> {
+  String _text = '';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Task list'),
+        title: Text('リスト追加'),
       ),
       body: Container(
         padding: EdgeInsets.all(64),
@@ -20,13 +20,13 @@ class addingTodo extends State<AddTodoComplete> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              text,
-              style: TextStyle(color: Colors.purpleAccent),
+              _text,
+              style: TextStyle(color: Colors.black),
             ),
             TextField(
               onChanged: (String value) {
                 setState(() {
-                  text = value;
+                  _text = value;
                 });
               },
             ),
@@ -38,13 +38,13 @@ class addingTodo extends State<AddTodoComplete> {
               child: ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor:
-                        MaterialStatePropertyAll(Colors.yellowAccent)),
+                    MaterialStatePropertyAll(Colors.greenAccent)),
                 onPressed: () {
-                  Navigator.of(context).pop(text);
+                  Navigator.of(context).pop(_text);
                 },
                 child: Text(
-                  'Add task list',
-                  style: TextStyle(color: Colors.pinkAccent),
+                  'リスト追加',
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
@@ -52,8 +52,8 @@ class addingTodo extends State<AddTodoComplete> {
               width: double.infinity,
               child: TextButton(
                 child: Text(
-                  'Cancel',
-                  style: TextStyle(color: Colors.orangeAccent),
+                  'キャンセル',
+                  style: TextStyle(color: Colors.black),
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
