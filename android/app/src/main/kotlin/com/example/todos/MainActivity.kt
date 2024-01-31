@@ -1,4 +1,4 @@
-package com.example.todos
+package com.example.traveling
 
 import io.flutter.embedding.android.FlutterActivity
 

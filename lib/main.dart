@@ -1,67 +1,22 @@
 import 'package:flutter/material.dart';
-import '../todo/add.dart';
-import '../todo/list.dart';
+import 'package:flutter/services.dart';
+import 'package:todos/screens/home-screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TodoApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TodoApp extends StatelessWidget {
+  const TodoApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     return MaterialApp(
-      title: 'ToDoリスト',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: ToDoListPage(),
-    );
-  }
-}
-
-class ToDoListPage extends StatefulWidget {
-  @override
-  _ToDoListPageState createState() => _ToDoListPageState();
-}
-
-class _ToDoListPageState extends State<ToDoListPage> {
-  List<String> toDoList = [];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('リスト一覧'),
-      ),
-      body: ListView.builder(
-        itemCount: toDoList.length,
-        itemBuilder: (context, index) {
-          return ToDoItem(
-              item: toDoList[index],
-              onDelete: () {
-                setState(() {
-                  toDoList.removeAt(index);
-                });
-              });
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newListText = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) {
-              return ToDoAddPage();
-            }),
-          );
-          if (newListText != null) {
-            setState(() {
-              toDoList.add(newListText);
-            });
-          }
-        },
-        child: Icon(Icons.add),
-      ),
+      debugShowCheckedModeBanner: false,
+      title: 'ToDo App',
+      home: HomeScreen(),
     );
   }
 }
