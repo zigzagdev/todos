@@ -1,65 +1,52 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
-import '../todo/add.dart';
-import '../todo/list.dart';
+import 'package:flutter/services.dart';
+import  'package:todos/Task/add.dart';// Import the add.dart file
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyHomePage(title: 'Todo App'));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  final String title;
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'ToDoリスト',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: ToDoListPage(),
-    );
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  List<String> tasks = [];
+
+  void _addTask(String task) {
+    setState(() {
+      tasks.add(task);
+    });
   }
-}
-
-class ToDoListPage extends StatefulWidget {
-  @override
-  _ToDoListPageState createState() => _ToDoListPageState();
-}
-
-class _ToDoListPageState extends State<ToDoListPage> {
-  List<String> toDoList = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('リスト一覧'),
+        title: Text(widget.title),
       ),
       body: ListView.builder(
-        itemCount: toDoList.length,
+        itemCount: tasks.length,
         itemBuilder: (context, index) {
-          return ToDoItem(
-              item: toDoList[index],
-              onDelete: () {
-                setState(() {
-                  toDoList.removeAt(index);
-                });
-              });
+          return ListTile(
+            title: Text(tasks[index]),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          final newListText = await Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) {
-              return ToDoAddPage();
-            }),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddTask(onTaskAdded: _addTask)),
           );
-          if (newListText != null) {
-            setState(() {
-              toDoList.add(newListText);
-            });
-          }
         },
+        tooltip: 'Add Task',
         child: Icon(Icons.add),
       ),
     );
